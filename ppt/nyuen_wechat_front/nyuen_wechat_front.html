@@ -8,298 +8,1038 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+			}
+
+			.reveal h1,
+			.reveal h2,
+			.reveal h3 {
+				text-transform: inherit;
+			}
+		</style>
 	</head>
 
 	<body>
-<script type="text/javascript">
-	//不同的目录请修改basic_url地址
-    var basic_url = '../../reveal.js/'
-	function dynamicLoadCss(url, params) {
-        var head = document.getElementsByTagName('head')[0];
-        var link = document.createElement('link');
-        link.type='text/css';
-        link.rel = 'stylesheet';
-        link.href = basic_url + url;
-        if(params){
-        	for(var key in params){
-        		link[key] = params[key]
-        	}
-        }
-        head.appendChild(link);
+		<script type="text/javascript">
+			//不同的目录请修改basic_url地址
+			var basic_url = '../../reveal.js/'
+
+			function dynamicLoadCss(url, params) {
+				var head = document.getElementsByTagName('head')[0];
+				var link = document.createElement('link');
+				link.type = 'text/css';
+				link.rel = 'stylesheet';
+				link.href = basic_url + url;
+				if (params) {
+					for (var key in params) {
+						link[key] = params[key]
+					}
+				}
+				head.appendChild(link);
+			}
+
+			function dynamicLoadJsArr(urls, callback) { //所有的都加载完成,执行callback
+				var head = document.getElementsByTagName('head')[0];
+				var tags = []
+				for (var url of urls) {
+					tags.push(false)
+					var script = document.createElement('script');
+					script.type = 'text/javascript';
+					script.src = basic_url + url;
+					if (typeof(callback) == 'function') {
+						script.onload = script.onreadystatechange = function() {
+							if (!this.readyState || this.readyState === "loaded" || this.readyState === "complete") {
+								tags.unshift(true)
+								tags.pop()
+								var res = tags.every(function(item) {
+									return item
+								})
+								if (res) {
+									callback()
+									script.onload = script.onreadystatechange = null
+								}
+							}
+						};
+					}
+					head.appendChild(script);
+				}
+			}
+		</script>
+		<script type="text/javascript">
+			dynamicLoadCss('dist/reset.css')
+			dynamicLoadCss('dist/reveal.css')
+			dynamicLoadCss('dist/theme/black.css', {
+				id: 'theme'
+			})
+			dynamicLoadCss('plugin/highlight/monokai.css', {
+				id: 'highlight-theme'
+			})
+
+			dynamicLoadJsArr(['dist/reveal.js', 'plugin/zoom/zoom.js', 'plugin/notes/notes.js', 'plugin/search/search.js',
+				'plugin/markdown/markdown.js', 'plugin/highlight/highlight.js'
+			], function() {
+				Reveal.initialize({
+					controls: true,
+					progress: true,
+					center: true,
+					hash: true,
+					plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight]
+				});
+				//由于样式是后面动态引入的，会有页面闪烁的问题，所以在加载完成前先隐藏，完成后显示
+				document.querySelector('.reveal').style.display = 'block'
+				//标题不要大写
+				var tagArr = ['h1', 'h2', 'h3']
+				tagArr.forEach(function(item) {
+					var list = document.querySelectorAll(item)
+					for (var i = 0; i < list.length; i++) {
+						list[i].style.textTransform = 'inherit'
+					}
+				})
+
+			})
+		</script>
+		<div class="reveal" style="display: none">
+			<div class="slides">
+				<!-- 请在这边插入内容，使用pandoc，命令：pandoc -t revealjs demo.md -o demo.html --slide-level 2 -->
+				<!-- demo.md是输入的md文档，demo.html输出的html文档，--slide-level 2设置幻灯片标题级别是2（二维的幻灯片） -->
+
+
+
+
+				<section id="恩元公众号前端项目" class="title-slide slide level1">
+					<h1>恩元公众号前端项目</h1>
+					<p>王东斌</p>
+					<p>2020.6.28</p>
+				</section>
+
+				<section>
+					<section id="项目简介" class="title-slide slide level1">
+						<h1>项目简介</h1>
+
+					</section>
+					<section id="交互流程" class="slide level2">
+						<h2 style="margin-top: -40px;">交互流程</h2>
+						<figure style="margin-top: -35px;">
+							<img data-src="http://i2.tiimg.com/722130/727f31bb85495a86.png" alt="交互流程" />
+						</figure>
+					</section>
+					<section id="框架库" class="slide level2">
+						<h2>框架／库</h2>
+						<ul>
+							<li>vue</li>
+							<li>vuex</li>
+							<li>vue-router</li>
+							<li>element-ui</li>
+							<li>axios</li>
+						</ul>
+					</section>
+					<section id="目录结构" class="slide level2">
+						<h2>目录结构</h2>
+						<figure style="margin-top: -35px;">
+							<img data-src="http://i2.tiimg.com/722130/8d9e1af73f85d71e.png" alt="目录结构" />
+						</figure>
+					</section>
+				</section>
+				<section>
+					<section id="项目进展" class="title-slide slide level1">
+						<h1>项目进展</h1>
+					</section>
+					<section id="注册,登录及忘记密码" class="slide level2">
+						<h2>注册,登录及忘记密码</h2>
+						<figure style="margin-top: -35px;">
+							<img style="width: 200px;" data-src="http://i1.fuimg.com/722130/ac545cfbb56c344a.png" alt="注册" />
+							<img style="width: 200px;" data-src="http://i1.fuimg.com/722130/17ae460fe10f8099.png" alt="登录" />
+							<img style="width: 200px;" data-src="http://i1.fuimg.com/722130/187927e32e4a7c5a.png" alt="忘记密码" />
+						</figure>
+					</section>
+					<section id="样本录入" class="slide level2">
+						<h2>样本录入</h2>
+						<figure style="margin-top: -35px;">
+							<img style="width: 200px;" data-src="http://i1.fuimg.com/722130/7d2a3a640e5addec.png" alt="首页" />
+							<img style="width: 200px;" data-src="http://i1.fuimg.com/722130/d7b14a8c3756684c.png" alt="样本录入" />
+							<img style="width: 200px;" data-src="http://i1.fuimg.com/722130/b10b28a7f261d0ae.png" alt="订单页" />
+							<img style="width: 200px;" data-src="http://i1.fuimg.com/722130/2277508407ddf80a.png" alt="订单完善页" />
+						</figure>
+					</section>
+				</section>
+				<section>
+					<section id="vue-router前端路由" class="title-slide slide level1">
+						<h1>Vue-router前端路由</h1>
+
+					</section>
+					<section id="路由" class="slide level2">
+						<h2>路由</h2>
+						<pre><code>
+export const constantRouterMap = [{
+    path: '/',
+    redirect: {
+      name: 'index'
+    },
+    component: Layout,
+    meta: {
+      title: '基因检测系统手机端'
     }
-    function dynamicLoadJsArr(urls, callback) {//所有的都加载完成,执行callback
-        var head = document.getElementsByTagName('head')[0];
-        var tags = []
-        for(var url of urls){
-        	tags.push(false)
-        	var script = document.createElement('script');
-        	script.type = 'text/javascript';
-        	script.src = basic_url + url;
-	        if(typeof(callback)=='function'){
-	            script.onload = script.onreadystatechange = function () {
-	                if (!this.readyState || this.readyState === "loaded" || this.readyState === "complete"){
-	                	tags.unshift(true)
-	                	tags.pop()
-	                	var res = tags.every(function(item){
-	                		return item
-	                	})
-	                	if(res){
-	                		callback()
-	                		script.onload = script.onreadystatechange = null
-	                	}
-	                }
-	            };
-	        }
-	        head.appendChild(script);
-        }
+  },
+  {
+    path: '/index',
+    name: 'index',
+    component: Layout,
+    meta: {
+      title: '基因检测系统手机端'
     }
-</script>
-<script type="text/javascript">
-    dynamicLoadCss('dist/reset.css')
-    dynamicLoadCss('dist/reveal.css')
-    dynamicLoadCss('dist/theme/black.css', {id: 'theme'})
-    dynamicLoadCss('plugin/highlight/monokai.css', {id: 'highlight-theme'})
-
-    dynamicLoadJsArr(['dist/reveal.js', 'plugin/zoom/zoom.js', 'plugin/notes/notes.js', 'plugin/search/search.js', 'plugin/markdown/markdown.js', 'plugin/highlight/highlight.js'], function(){
-    	Reveal.initialize({
-			controls: true,
-			progress: true,
-			center: true,
-			hash: true,
-			plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
-		});
-		//由于样式是后面动态引入的，会有页面闪烁的问题，所以在加载完成前先隐藏，完成后显示
-		document.querySelector('.reveal').style.display = 'block'
-    })
-</script>
-  <div class="reveal" style="display: none">
-    <div class="slides">
-    	<!-- 请在这边插入内容，使用pandoc，命令：pandoc -t revealjs demo.md -o demo.html --slide-level 2 -->
-    	<!-- demo.md是输入的md文档，demo.html输出的html文档，--slide-level 2设置幻灯片标题级别是2（二维的幻灯片） -->
-
-
-
-
-<section id="恩元公众号前端项目" class="title-slide slide level1">
-<h1>恩元公众号前端项目</h1>
-<p>王东斌</p>
-<p>2020.6.28</p>
-</section>
-
-<section>
-<section id="项目简介" class="title-slide slide level1">
-<h1>项目简介</h1>
-
-</section>
-<section id="交互流程" class="slide level2">
-<h2 style="margin-top: -40px;">交互流程</h2>
-<figure style="margin-top: -35px;">
-<img data-src="http://i2.tiimg.com/722130/727f31bb85495a86.png" alt="" /><figcaption>avatar</figcaption>
-</figure>
-</section>
-<section id="框架库" class="slide level2">
-<h2>框架／库</h2>
-<ul>
-<li>vue</li>
-<li>vuex</li>
-<li>vue-router</li>
-<li>element-ui</li>
-<li>axios</li>
-</ul>
-</section>
-<section id="目录结构" class="slide level2">
-<h2>目录结构</h2>
-<ul>
-<li>src</li>
-</ul>
-</section></section>
-<section>
-<section id="vue-router前端路由" class="title-slide slide level1">
-<h1>Vue-router前端路由</h1>
-
-</section>
-<section id="路由" class="slide level2">
-<h2>路由</h2>
-<pre><code>//insert
-</code></pre>
-</section>
-<section id="路由守卫" class="slide level2">
-<h2>路由守卫</h2>
-<pre><code>//insert
-</code></pre>
-</section></section>
-<section>
-<section id="vuex状态管理" class="title-slide slide level1">
-<h1>Vuex状态管理</h1>
-
-</section>
-<section id="index" class="slide level2">
-<h2>index</h2>
-<pre><code>//insert
-</code></pre>
-</section>
-<section id="getter" class="slide level2">
-<h2>getter</h2>
-<pre><code>//insert
-</code></pre>
-</section>
-<section id="module" class="slide level2">
-<h2>module</h2>
-<pre><code>//insert
-</code></pre>
-</section></section>
-<section>
-<section id="axios及api请求封装" class="title-slide slide level1">
-<h1>axios及api请求封装</h1>
-
-</section>
-<section id="axios封装" class="slide level2">
-<h2>axios封装</h2>
-<pre><code>//insert
-</code></pre>
-</section>
-<section id="api请求" class="slide level2">
-<h2>api请求</h2>
-<pre><code>//insert
-</code></pre>
-</section></section>
-<section>
-<section id="element-ui使用" class="title-slide slide level1">
-<h1>element-ui使用</h1>
-
-</section>
-<section id="el-form表单" class="slide level2">
-<h2>el-form表单</h2>
-<pre><code>//insert
-</code></pre>
-</section>
-<section id="alert提示" class="slide level2">
-<h2>$alert提示</h2>
-<pre><code>//insert
-</code></pre>
-</section></section>
-<section>
-<section id="mockkoa2假数据" class="title-slide slide level1">
-<h1>mock+koa2假数据</h1>
-
-</section>
-<section id="koa2nodejs框架做服务" class="slide level2">
-<h2>koa2（nodeJS框架）做服务</h2>
-<pre><code>//insert
-</code></pre>
-</section>
-<section id="mock制作假数据" class="slide level2">
-<h2>mock制作假数据</h2>
-<pre><code>//insert
-</code></pre>
-</section></section>
-<section id="end" class="title-slide slide level1">
-<h1>END</h1>
-<p>感谢各位的观看</p>
-</section>
-
-<section>
-<section id="代码" class="title-slide slide level1">
-<h1>代码</h1>
-
-</section>
-<section id="代码标题2-1" class="slide level2">
-<h2>代码标题2-1</h2>
-<pre><code>//不同的目录请修改basic_url地址
-    var basic_url = &#39;../../reveal.js/&#39;
-    function dynamicLoadCss(url, params) {
-        var head = document.getElementsByTagName(&#39;head&#39;)[0];
-        var link = document.createElement(&#39;link&#39;);
-        link.type=&#39;text/css&#39;;
-        link.rel = &#39;stylesheet&#39;;
-        link.href = basic_url + url;
-        if(params){
-            for(var key in params){
-                link[key] = params[key]
-            }
-        }
-        head.appendChild(link);
+  },
+  {
+    path: '/register',
+    name: 'register',
+    redirect: {
+      name: 'verificate'
+    },
+    component: () => import('@/views/register'),
+    meta: {
+      title: '正在注册'
+    },
+    children: [{ //验证码页
+      path: 'verificate',
+      name: 'verificate',
+      component: () => import('@/views/register/verificate')
+    }, { //身份选择页
+      path: 'roleRegister',
+      name: 'roleRegister',
+      component: () => import('@/views/register/roleRegister')
+    }, { //医生页
+      path: 'doctorRegister',
+      name: 'doctorRegister',
+      component: () => import('@/views/register/doctorRegister')
+    }, { //受检者页
+      path: 'patientRegister',
+      name: 'patientRegister',
+      component: () => import('@/views/register/patientRegister')
+    }, { //密码页
+      path: 'passwordRegister',
+      name: 'passwordRegister',
+      component: () => import('@/views/register/passwordRegister')
+    }]
+  },
+  {
+    path: '/login',
+    name: 'login',
+    redirect: {
+      name: 'codeLogin'
+    },
+    component: () => import('@/views/login'),
+    meta: {
+      title: '登录'
+    },
+    children: [{ //验证码登录
+      path: 'codeLogin',
+      name: 'codeLogin',
+      component: () => import('@/views/login/codeLogin')
+    }, { //账号登录
+      path: 'userLogin',
+      name: 'userLogin',
+      component: () => import('@/views/login/userLogin')
+    }, { //修改密码
+      path: 'changePassword',
+      name: 'changePassword',
+      component: () => import('@/views/login/changePassword'),
+      meta: {
+        title: '设置密码'
+      },
+    }]
+  },
+  // {
+  //   path: '/psdChange',
+  //   name: 'psdChange',
+  //   component: () => import('@/views/psdChange'),
+  //   meta: {
+  //     title: '设置密码'
+  //   },
+  //   hidden: true
+  // },
+  {
+    path: '/sampleInput',
+    name: 'sampleInput',
+    // redirect: { name: '' },
+    component: () => import('@/views/sampleInput'),
+    meta: {
+      title: '填写样本信息'
     }
-    function dynamicLoadJsArr(urls, callback) {//所有的都加载完成,执行callback
-        var head = document.getElementsByTagName(&#39;head&#39;)[0];
-        var tags = []
-        for(var url of urls){
-            tags.push(false)
-            var script = document.createElement(&#39;script&#39;);
-            script.type = &#39;text/javascript&#39;;
-            script.src = basic_url + url;
-            if(typeof(callback)==&#39;function&#39;){
-                script.onload = script.onreadystatechange = function () {
-                    if (!this.readyState || this.readyState === &quot;loaded&quot; || this.readyState === &quot;complete&quot;){
-                        tags.unshift(true)
-                        tags.pop()
-                        var res = tags.every(function(item){
-                            return item
-                        })
-                        if(res){
-                            callback()
-                            script.onload = script.onreadystatechange = null
-                        }
-                    }
-                };
-            }
-            head.appendChild(script);
+  },
+  { //订单页面
+    path: '/order',
+    name: 'order',
+    component: () => import('@/views/sampleInput/order'),
+    meta: {
+      title: '创建订单中'
+    },
+    children: [{
+      path: ':sampletempId',
+      // component: () => import('@/views/sampleInput/order'),
+    }]
+  },
+  { //样本信息完善页面
+    path: '/sampleUpdate',
+    name: 'sampleUpdate',
+    component: () => import('@/views/sampleInput/sampleUpdate'),
+    meta: {
+      title: '完善样本信息'
+    },
+    children: [{
+      path: ':orderId',
+      // component: () => import('@/views/sampleInput/order'),
+    }]
+  },
+  {
+    path: '/orderManage',
+    name: 'orderManage',
+    component: () => import('@/views/orderManage'),
+    meta: {
+      title: '基因检测系统手机端订单管理'
+    },
+    hidden: true
+  },
+  {
+    path: '/sampleAmount',
+    name: 'sampleAmount',
+    component: () => import('@/views/sampleAmount'),
+    meta: {
+      title: '基因检测系统手机端样本统计'
+    },
+    hidden: true
+  },
+  {
+    path: '/sampleStatus',
+    name: 'sampleStatus',
+    component: () => import('@/views/sampleStatus'),
+    meta: {
+      title: '样本状态查询'
+    },
+    hidden: true
+  },
+  {
+    path: '/accountManage',
+    name: 'accountManage',
+    component: () => import('@/views/accountManage'),
+    meta: {
+      title: '账户管理'
+    },
+    hidden: true
+  },
+  {
+    path: '*',
+    redirect: '/404',
+    hidden: true
+  }
+]
+</code></pre>
+					</section>
+					<section id="路由守卫" class="slide level2">
+						<h2>导航守卫</h2>
+						<pre><code>
+router.beforeEach((to, from, next) => {
+  setTitle(to.matched[0].meta.title)
+  next()
+})
+</code></pre>
+					</section>
+				</section>
+				<section>
+					<section id="vuex状态管理" class="title-slide slide level1">
+						<h1>Vuex状态管理</h1>
+
+					</section>
+					<section id="index" class="slide level2">
+						<h2>index</h2>
+						<pre><code>
+import Vue from 'vue'
+import Vuex from 'vuex'
+import user from './modules/user'
+import option from './modules/option'
+
+import getters from './getters'
+Vue.use(Vuex)
+
+const store = new Vuex.Store({
+  modules: {
+    user,
+    option
+  },
+  getters
+})
+
+export default store
+</code></pre>
+					</section>
+					<section id="getter" class="slide level2">
+						<h2>getter</h2>
+						<pre><code>
+const getters = {
+  token: state => state.user.token,
+  uMobile: state => state.user.uMobile,
+  code: state => state.user.code,//网页的url中的code字段
+  openId: state => state.user.openId,
+  yanzhengma: state => state.user.yanzhengma,
+  name: state => state.user.name,
+  role: state => state.user.role,
+  hospital: state => state.user.hospital,
+  department: state => state.user.department,
+
+  projects: state => state.option.projects,
+  products: state => state.option.products,
+  productType: state => state.option.productType,
+  sampleType: state => state.option.sampleType,
+  hospitals: state => state.option.hospitals,
+}
+export default getters
+</code></pre>
+					</section>
+					<section id="module" class="slide level2">
+						<h2>module</h2>
+						<pre><code>
+//user.js
+const user = {
+  state: {
+    token: getToken(),
+    uMobile: '',
+    code: '', //code码
+    openId: '',
+    yanzhengma: '', //验证码
+    name: '', //姓名
+    role: '', //角色
+    hospital: '', //医院
+    department: '' //科室
+  },
+
+  mutations: {
+    SET_TOKEN: (state, token) => {
+      state.token = token
+    },
+    SET_USER: (state, params) => {
+      for (let key in params) {
+        if (params[key]) {
+          console.log(key, params[key])
+          state[key] = params[key]
         }
-    }</code></pre>
-</section>
-<section id="代码标题2-2" class="slide level2">
-<h2>代码标题2-2</h2>
-<pre><code>//不同的目录请修改basic_url地址
-    var basic_url = &#39;../../reveal.js/&#39;
-    function dynamicLoadCss(url, params) {
-        var head = document.getElementsByTagName(&#39;head&#39;)[0];
-        var link = document.createElement(&#39;link&#39;);
-        link.type=&#39;text/css&#39;;
-        link.rel = &#39;stylesheet&#39;;
-        link.href = basic_url + url;
-        if(params){
-            for(var key in params){
-                link[key] = params[key]
-            }
-        }
-        head.appendChild(link);
+      }
+    },
+  },
+
+  actions: {
+    //
+    ValidateCode({commit}, code) {
+      return new Promise((resolve, reject) => {
+        validateCode({
+          code
+        }).then(res => {
+          commit('SET_USER', {
+            openId: res.data
+          })
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    //
+    ValidateOpenId({commit}, openid) {
+      return new Promise((resolve, reject) => {
+        validateOpenId({
+          openid
+        }).then(res => {
+          if (res.code == 200) {
+            commit('SET_USER', {
+              uMobile: res.data.uMobile,
+              name: res.data.uName, //姓名
+              role: res.data.rId, //角色
+              hospital: res.data.cRealname, //医院
+              department: res.data.uDepartment //科室
+            })
+            resolve(res)
+          }else{
+            resolve(res)
+          }
+        }).catch(err => {
+          reject(err)
+        })
+      })
     }
-    function dynamicLoadJsArr(urls, callback) {//所有的都加载完成,执行callback
-        var head = document.getElementsByTagName(&#39;head&#39;)[0];
-        var tags = []
-        for(var url of urls){
-            tags.push(false)
-            var script = document.createElement(&#39;script&#39;);
-            script.type = &#39;text/javascript&#39;;
-            script.src = basic_url + url;
-            if(typeof(callback)==&#39;function&#39;){
-                script.onload = script.onreadystatechange = function () {
-                    if (!this.readyState || this.readyState === &quot;loaded&quot; || this.readyState === &quot;complete&quot;){
-                        tags.unshift(true)
-                        tags.pop()
-                        var res = tags.every(function(item){
-                            return item
-                        })
-                        if(res){
-                            callback()
-                            script.onload = script.onreadystatechange = null
-                        }
-                    }
-                };
-            }
-            head.appendChild(script);
-        }
-    }</code></pre>
-</section></section>
+  }
+}
+//option.js
+const option = {
+  state: {
+    projects: [],
+    productType: constOptions.productType,
+    products: [],
+    sampleType: [],
+    hospitals: []
+  },
+
+  mutations: {
+    SET_PROJECTS: (state, arr) => {
+      state.projects = arr
+    },
+    SET_PRODUCTS: (state, arr) => {
+      state.products = arr
+    },
+    SET_SAMPLETYPE: (state, arr) => {
+      state.sampleType = arr
+    },
+    SET_HOSPITALS: (state, arr) => {
+      state.hospitals = arr
+    },
+  },
+
+  actions: {
+    SetProjects({ commit }, ) {
+      return new Promise((resolve, reject) => {
+        getProject().then(res => {
+          commit('SET_PROJECTS', res.data)
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    SetProducts({ commit }, pType) {//pType产品大类 236=臻会选 243=贝安臻
+      return new Promise((resolve, reject) => {
+        getProduct(pType).then(res => {
+          commit('SET_PRODUCTS', res.data)
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    SetSampleType({ commit }, params) {
+      return new Promise((resolve, reject) => {
+        getSampleType(params).then(res => {
+          commit('SET_SAMPLETYPE', res.data)
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    SetHospitals({ commit }, params) {
+      return new Promise((resolve, reject) => {
+        getHosipital(params).then(res => {
+          commit('SET_HOSPITALS', res.data)
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+  }
+}
+
+export default option
+</code></pre>
+					</section>
+				</section>
+				<section>
+					<section id="axios及api请求封装" class="title-slide slide level1">
+						<h1>axios及api请求封装</h1>
+
+					</section>
+					<section id="axios封装" class="slide level2">
+						<h2>axios封装</h2>
+						<pre><code>
+// 创建axios实例
+const service = axios.create({
+  baseURL: 'http://192.168.10.77:8100', // api的base_url
+  timeout: 10000 // 请求超时时间
+})
+// request拦截器
+service.interceptors.request.use(config => {
+  config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+  // 解决axios post请求头为json，方便后台获取数据
+  if (config.method === 'post') {
+    config.headers['Content-Type'] = 'application/json' //  注意：设置很关键
+  }
+  // if (store.getters.token) {
+  //   config.headers['X-Token'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+  // }
+  return config
+},
+// respone拦截器
+service.interceptors.response.use(
+  response => {
+    //需要权限、重定向之类的可以在这里编写相关逻辑代码
+    return response.data
+  },
+  error => {
+    console.log('err' + error)// for debug
+    return Promise.reject(error)
+  }
+)
+</code></pre>
+					</section>
+					<section id="api请求" class="slide level2">
+						<h2>api请求</h2>
+						<pre><code>
+//validateUser.js
+export function validateCode(params){
+  return request({
+    url: appendUrl + '/user/validateCode',
+    method: 'post',
+    data: params
+  })
+}
+export function validateOpenId(params){
+  return request({
+    url: appendUrl + '/user/validateOpenId',
+    method: 'post',
+    data: params
+  })
+}
+
+//register.js
+export function getCode(params){
+  return request({
+    url: appendUrl + '/user/registerSendSms',
+    method: 'post',
+    data: params
+  })
+}
+export function checkVerifiry(params){
+  return request({
+    url: `${appendUrl}/user/checkVerifiry`,
+    method: 'post',
+    data: params
+  })
+}
+export function register(params, openId){
+  return request({
+    url: `${appendUrl}/user/register/${openId}`,
+    method: 'post',
+    data: params
+  })
+}
+
+//login.js
+export function getLoginSms(params){
+  return request({
+    url: `${appendUrl}/user/loginSendSms`,
+    method: 'post',
+    data: params
+  })
+}
+
+export function login(params, type){
+  return request({
+    url: `${appendUrl}/user/login/${type}`,
+    method: 'post',
+    data: params
+  })
+}
+
+export function getForgotPwdSms(params){
+  return request({
+    url: `${appendUrl}/user/forgotPwdSendSms/${params}`,
+    method: 'post',
+  })
+}
+
+export function setForgetPwd(params){
+  return request({
+    url: `${appendUrl}/user/forgotPwd`,
+    method: 'post',
+    data: params
+  })
+}
+
+export function checkVerifiry(params){
+  return request({
+    url: `${appendUrl}/user/checkVerifiry`,
+    method: 'post',
+    data: params
+  })
+}
+//option.js
+import request from '@/utils/request'
+import { appendUrl } from '@/config/env'
+
+export function getProject(params){
+  return request({
+    url: `${appendUrl}/project/getProject`,
+    method: 'get'
+  })
+}
+
+export function getProduct(params){
+  return request({
+    url: `${appendUrl}/product/getPName/${params}`,
+    method: 'post'
+  })
+}
+
+export function getSampleType(params){
+  return request({
+    url: `${appendUrl}/code/getCodeName/1`,
+    method: 'post'
+  })
+}
+
+//hospital.js
+import request from '@/utils/request'
+import { appendUrl } from '@/config/env'
+export function getHosipital(params){
+  return request({
+    url: `${appendUrl}/sampleRegister/getHosipital?cRealname=${params}`,
+    method: 'get'
+  })
+}
+
+//order.js
+export function getOrder(params){
+  return request({
+    url: appendUrl + '/sampleRegister/getOrder?sampletempId=' + params,
+    method: 'get'
+  })
+}
+
+//sample.js
+export function sampleInsert(params){
+  return request({
+    url: appendUrl + '/sampleRegister/insertSample',
+    method: 'post',
+    data: params
+  })
+}
+
+export function sampleUpdate(params){
+  return request({
+    url: appendUrl + '/sampleRegister/updateSample',
+    method: 'post',
+    data: params
+  })
+}
+</code></pre>
+					</section>
+				</section>
+				<section>
+					<section id="element-ui使用" class="title-slide slide level1">
+						<h1>element-ui使用</h1>
+
+					</section>
+					<section id="el-form表单" class="slide level2">
+						<h2>el-form表单</h2>
+						<pre><code>
+<el-form label-position="left" :model="form" :rules="rules" ref="form" label-width="4rem" class="input-form">
+      <div class="personal-info item-info">个人信息</div>
+      <el-form-item class="form-item" label="样本编号" prop="sampleregistertemp.infoId">
+        <el-input size="small" placeholder="请输入样本编号" v-model="form.sampleregistertemp.infoId">
+          <el-button slot="append" @click="handleInfoIdScan">扫码</el-button>
+        </el-input>
+      </el-form-item>
+      <el-form-item class="form-item" label="备注" prop="">
+        <el-input size="small" placeholder="选填" v-model="form.sampleregistertemp.remarks1"></el-input>
+      </el-form-item>
+      <el-form-item class="form-item" label="姓名" prop="sampleregistertemp.userName">
+        <el-input size="small" placeholder="请输入姓名" v-model="form.sampleregistertemp.userName"></el-input>
+      </el-form-item>
+      <el-form-item class="form-item" label="性别" prop="sampleregistertemp.sex">
+        <el-select size="small" v-model="form.sampleregistertemp.sex" :placeholder="'请选择性别'">
+          <el-option label="男" value="男"></el-option>
+          <el-option label="女" value="女"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item class="form-item" label="出生年份" prop="sampleregistertemp.age">
+        <el-input size="small" placeholder="请输入出生年份,如2000" v-model="form.sampleregistertemp.age"></el-input>
+      </el-form-item>
+      <el-form-item class="form-item" label="电话" prop="sampleregistertemp.patientPhone">
+        <el-input size="small" placeholder="请输入电话" v-model="form.sampleregistertemp.patientPhone"></el-input>
+      </el-form-item>
+      <div style="font-size: 0.6rem; color: red; text-align: right;">请正确填写手机号，以便用于恩元公众号个人中心的登录和信息查询</div>
+      <div class="addressee-info item-info">报告收件人信息</div>
+      <el-form-item class="form-item" label="收件人" prop="order.receiver">
+        <el-input size="small" placeholder="请输入收件人姓名" v-model="form.order.receiver"></el-input>
+      </el-form-item>
+      <el-form-item class="form-item" label="手机号" prop="order.shippingTel">
+        <el-input size="small" placeholder="请输入收件人手机号" v-model="form.order.shippingTel"></el-input>
+      </el-form-item>
+      <el-form-item class="form-item" label="收件人地址" prop="sampleregistertemp.area">
+        <el-select size="small" v-model="form.sampleregistertemp.province" :placeholder="'请选择省份'">
+          <el-option v-for="item in province" :label="item.name" :value="item.name" :key="item.name"></el-option>
+        </el-select>
+        <el-select size="small" v-model="form.sampleregistertemp.city" :placeholder="'请选择城市'">
+          <el-option v-for="item in cityArr" :label="item.name" :value="item.name" :key="item.name"></el-option>
+        </el-select>
+        <el-select size="small" v-model="form.sampleregistertemp.area" :placeholder="'请选择区域'">
+          <el-option v-for="item in AreaArr" :label="item" :value="item" :key="item"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item class="form-item" label="详细地址" prop="sampleregistertemp.sendAddress">
+        <el-input size="small" placeholder="请输入收件人详细地址" v-model="form.sampleregistertemp.sendAddress"></el-input>
+      </el-form-item>
+      <el-button size="small" type="primary" class="center confirm-btn" @click="handleConfirm">确认</el-button>
+    </el-form>
+</code></pre>
+					</section>
+				</section>
+				<section>
+					<section id="mockkoa2假数据" class="title-slide slide level1">
+						<h1>mock+koa2假数据</h1>
+
+					</section>
+					<section id="koa2nodejs框架做服务" class="slide level2">
+						<h2>koa2（nodeJS框架）做服务</h2>
+						<pre><code>
+//nyuen-wechat-mock/app.js
+const index = require('./routes/index')
+const users = require('./routes/users')
+const hospital = require('./routes/hospital')
+
+// routes
+app.use(index.routes(), index.allowedMethods())
+app.use(users.routes(), users.allowedMethods())
+app.use(hospital.routes(), hospital.allowedMethods())
+</code></pre>
+					</section>
+					<section id="mock制作假数据" class="slide level2">
+						<h2>mock制作假数据</h2>
+						<pre><code>
+const router = require('koa-router')()
+
+router.get('/hospital', function (ctx, next) {
+  ctx.body = 'this is a hospital response'
+})
+
+router.get('/api-wechat/sampleRegister/getHospital', async (ctx, next) => {
+  ctx.body = {
+  "code": 200,
+  "message": "mock：成功",
+  "data": [
+    {
+      "cId": 11,
+      "cName": null,
+      "cPassword": null,
+      "cRealname": "河北沧州安定医院",
+      "cNickname": null,
+      "cCompany": null,
+      "cSex": null,
+      "cEmail": null,
+      "cPic": null,
+      "cZip": null,
+      "cMobile": null,
+      "cTel": null,
+      "cFax": null,
+      "cQq": null,
+      "cProvience": null,
+      "cCity": null,
+      "cArea": null,
+      "cAddress": null,
+      "cOpenid": null,
+      "cRegisterdate": null,
+      "cLogincount": null,
+      "cLogintime": null,
+      "cLoginip": null,
+      "cState": null,
+      "cType": null,
+      "cInto": null,
+      "cSale": null,
+      "cFeetype": null,
+      "cDefined1": null,
+      "cDefined2": null,
+      "cDefined3": null,
+      "cDefined4": null,
+      "cDefined5": null
+    },
+    {
+      "cId": 12,
+      "cName": null,
+      "cPassword": null,
+      "cRealname": "河北东光安定医院",
+      "cNickname": null,
+      "cCompany": null,
+      "cSex": null,
+      "cEmail": null,
+      "cPic": null,
+      "cZip": null,
+      "cMobile": null,
+      "cTel": null,
+      "cFax": null,
+      "cQq": null,
+      "cProvience": null,
+      "cCity": null,
+      "cArea": null,
+      "cAddress": null,
+      "cOpenid": null,
+      "cRegisterdate": null,
+      "cLogincount": null,
+      "cLogintime": null,
+      "cLoginip": null,
+      "cState": null,
+      "cType": null,
+      "cInto": null,
+      "cSale": null,
+      "cFeetype": null,
+      "cDefined1": null,
+      "cDefined2": null,
+      "cDefined3": null,
+      "cDefined4": null,
+      "cDefined5": null
+    },
+    {
+      "cId": 14,
+      "cName": null,
+      "cPassword": null,
+      "cRealname": "河北泊头安康医院",
+      "cNickname": null,
+      "cCompany": null,
+      "cSex": null,
+      "cEmail": null,
+      "cPic": null,
+      "cZip": null,
+      "cMobile": null,
+      "cTel": null,
+      "cFax": null,
+      "cQq": null,
+      "cProvience": null,
+      "cCity": null,
+      "cArea": null,
+      "cAddress": null,
+      "cOpenid": null,
+      "cRegisterdate": null,
+      "cLogincount": null,
+      "cLogintime": null,
+      "cLoginip": null,
+      "cState": null,
+      "cType": null,
+      "cInto": null,
+      "cSale": null,
+      "cFeetype": null,
+      "cDefined1": null,
+      "cDefined2": null,
+      "cDefined3": null,
+      "cDefined4": null,
+      "cDefined5": null
+    },
+    {
+      "cId": 16,
+      "cName": null,
+      "cPassword": null,
+      "cRealname": "乐山市精神卫生中心",
+      "cNickname": null,
+      "cCompany": null,
+      "cSex": null,
+      "cEmail": null,
+      "cPic": null,
+      "cZip": null,
+      "cMobile": null,
+      "cTel": null,
+      "cFax": null,
+      "cQq": null,
+      "cProvience": null,
+      "cCity": null,
+      "cArea": null,
+      "cAddress": null,
+      "cOpenid": null,
+      "cRegisterdate": null,
+      "cLogincount": null,
+      "cLogintime": null,
+      "cLoginip": null,
+      "cState": null,
+      "cType": null,
+      "cInto": null,
+      "cSale": null,
+      "cFeetype": null,
+      "cDefined1": null,
+      "cDefined2": null,
+      "cDefined3": null,
+      "cDefined4": null,
+      "cDefined5": null
+    },
+    {
+      "cId": 18,
+      "cName": null,
+      "cPassword": null,
+      "cRealname": "四川省江油市精神病院",
+      "cNickname": null,
+      "cCompany": null,
+      "cSex": null,
+      "cEmail": null,
+      "cPic": null,
+      "cZip": null,
+      "cMobile": null,
+      "cTel": null,
+      "cFax": null,
+      "cQq": null,
+      "cProvience": null,
+      "cCity": null,
+      "cArea": null,
+      "cAddress": null,
+      "cOpenid": null,
+      "cRegisterdate": null,
+      "cLogincount": null,
+      "cLogintime": null,
+      "cLoginip": null,
+      "cState": null,
+      "cType": null,
+      "cInto": null,
+      "cSale": null,
+      "cFeetype": null,
+      "cDefined1": null,
+      "cDefined2": null,
+      "cDefined3": null,
+      "cDefined4": null,
+      "cDefined5": null
+    },
+    {
+      "cId": 20,
+      "cName": null,
+      "cPassword": null,
+      "cRealname": "涿鹿县康宁精神病专科医院",
+      "cNickname": null,
+      "cCompany": null,
+      "cSex": null,
+      "cEmail": null,
+      "cPic": null,
+      "cZip": null,
+      "cMobile": null,
+      "cTel": null,
+      "cFax": null,
+      "cQq": null,
+      "cProvience": null,
+      "cCity": null,
+      "cArea": null,
+      "cAddress": null,
+      "cOpenid": null,
+      "cRegisterdate": null,
+      "cLogincount": null,
+      "cLogintime": null,
+      "cLoginip": null,
+      "cState": null,
+      "cType": null,
+      "cInto": null,
+      "cSale": null,
+      "cFeetype": null,
+      "cDefined1": null,
+      "cDefined2": null,
+      "cDefined3": null,
+      "cDefined4": null,
+      "cDefined5": null
+    }]
+  }
+})
+module.exports = router
+</code></pre>
+					</section>
+				</section>
+				<section id="end" class="title-slide slide level1">
+					<h1>END</h1>
+					<p>感谢各位的观看</p>
+				</section>
 
 
 
-
-
-
-
-		<!-- 插入内容结束 -->
-    </div>
-  </div>
+				<!-- 插入内容结束 -->
+			</div>
+		</div>
 	</body>
 </html>
